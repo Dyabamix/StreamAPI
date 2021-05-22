@@ -97,19 +97,15 @@ public class StreamAPI {
     }
 
     public static class MailService<T> implements Consumer<Message<T>> {
-        private String to;
-        private List<T> content = new ArrayList<>();
+        private Map<String, List<T>> mailBox = new HashMap<>();
 
         @Override
-        public void accept(Message<T> tMailBox) {
-            this.to = tMailBox.getTo();
-            this.content = Arrays.asList(tMailBox.content);
+        public void accept(Message<T> message) {
+            mailBox.put(message.to, Arrays.asList(message.content));
+            //Arrays.asList(message.content)
         }
 
         public Map<String, List<T>> getMailBox() {
-            Map<String, List<T>> mailBox = new HashMap<>();
-            mailBox.put(this.to, this.content);
-            System.out.println(mailBox.get("H.P. Lovecraft"));
             return mailBox;
         }
     }
