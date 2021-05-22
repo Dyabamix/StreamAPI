@@ -1,10 +1,8 @@
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.Consumer;
 
-public class Main {
+public class StreamAPI {
     public static void main(String[] args) {
         // Random variables
         String randomFrom = "..."; // Некоторая случайная строка. Можете выбрать ее самостоятельно.
@@ -83,50 +81,55 @@ public class Main {
         assert salaries.get(randomTo).equals(Arrays.asList(randomSalary)): "wrong salaries mailbox content (3)";
     }
 
-    public static class MailMessage{
-        public MailMessage(String from, String to, String Content) {
-            super();
+    public static class MailMessage extends MailBox<String>{
+        public MailMessage(String from, String to, String content) {
+            super(from, to, content);
         }
-
-        public Object getFrom() {
-            return null;
-        }
-
-        public Object getTo() {
-            return null;
-        }
-
-        public String getContent() {
-            return null;
-        }
-// implement here
+        // implement here
     }
 
-    public static class Salary{
-        public Salary(String from, String to, int salary) {
-
-        }
-
-        public String getTo() {
-            return null;
+    public static class Salary extends MailBox<Integer>{
+        public Salary(String from, String to, Integer content) {
+            super(from, to, content);
         }
 
         // implement here
     }
 
-    public static class MailService <T> implements Consumer<MailMessage> {
+    public static class MailService <T> implements Consumer<MailBox<T>> {
         public Map<String, List<T>> getMailBox() {
             return null;
         }
-        
+
 
         @Override
-        public void accept(MailMessage mailMessage) {
-            
+        public void accept(MailBox<T> tMailBox) {
+
         }
-// implement here
+    }
+
+    abstract static class MailBox <T>{
+        private String from;
+        private String to;
+        private T content;
+
+        public MailBox(String from, String to, T content) {
+            this.from = from;
+            this.to = to;
+            this.content = content;
+        }
+
+        public String getTo(){
+            return this.to;
+        }
+
+        public String getFrom() {
+            return from;
+        }
+
+        public T getContent() {
+            return content;
+        }
     }
 
 }
-
-
