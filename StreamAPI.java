@@ -133,4 +133,16 @@ public class StreamAPI {
             return content;
         }
     }
+    
+    public static class SeregaHashMap<V> extends HashMap<String, List<V>> {
+    
+    @Override
+    public List<V> get(Object key) {
+        List<V> vs = super.get(key);
+        if (vs == null) {
+            return Collections.emptyList();
+        }
+        return vs;
+    }
+}
 }
